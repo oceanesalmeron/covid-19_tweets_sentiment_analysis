@@ -2,14 +2,6 @@ import re
 import nltk
 from nltk.corpus import stopwords
 
-def encode_sentiment(x):
-    if x == "Extremely Positive" or x == "Positive":
-        return 1
-    elif x == "Extremely Negative" or x == "Negative":
-        return -1
-    else:
-        return 0
-
 def remove_punctuations(x):
     return re.sub(r'[^\w\s]', '', x)
 
