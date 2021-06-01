@@ -1,6 +1,5 @@
 import re
-import nltk
-from nltk.corpus import stopwords
+from spacy.lang.en.stop_words import STOP_WORDS
 
 def remove_punctuations(x):
     return re.sub(r'[^\w\s]', '', x)
@@ -24,8 +23,7 @@ def remove_space(x):
     return re.sub(r'\s+', '', x)
 
 def remove_stopwords(x):
-    stop_words = stopwords.words('english')
-    return [item for item in x.split() if item not in stop_words]
+    return [item for item in x.split() if item not in STOP_WORDS]
 
 def lower(x):
     return x.lower()
