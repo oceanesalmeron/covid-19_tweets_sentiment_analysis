@@ -1,5 +1,9 @@
 import re
+import string
+import spacy
 from spacy.lang.en.stop_words import STOP_WORDS
+
+nlp = spacy.load('en_core_web_sm', disable=['parser', 'ner'])  
 
 def remove_punctuations(x):
     return re.sub(r'[^\w\s]', '', x)
@@ -19,23 +23,33 @@ def remove_mention(x):
 def remove_hashtags(x):
     return re.sub(r'#\w+', '', x)
 
-def remove_space(x):
-    return re.sub(r'\s+', '', x)
+def lower(x):
+    return x.lower()
 
 def remove_stopwords(x):
     return [item for item in x.split() if item not in STOP_WORDS]
 
-def lower(x):
-    return x.lower()
+def tokenization(x):
+    doc = nlp(x)
+
+    tokens = []
+    for token in doc:
+        if token.lemma_ != "-PRON-":
+            temp = token.lemma_.strip()
+        else:
+            temp = token
+        tokens.append(temp)
+
+    return [token for token in tokens if token not in STOP_WORDS and token not in string.punctuation]
+
 
 def clean_tweet(x): 
     x = remove_urls(x)
     x = remove_html(x)
     x = remove_mention(x)
     x = remove_hashtags(x)
-    x = remove_punctuations(x)
     x = remove_numbers(x)
     x = lower(x)
-    x = remove_stopwords(x)
+    x = tokenization(x)
 
     return x
