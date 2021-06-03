@@ -13,7 +13,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
 from sklearn.svm import LinearSVC
-from utils.clean_text import clean_tweet
+from clean_text import clean_tweet
 
 def load_data(folder_path):
     """ 
